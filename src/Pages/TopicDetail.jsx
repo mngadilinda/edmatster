@@ -2,7 +2,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { fetchTopic, completeTopic, fetchModuleTopics } from '../services/modules';
+import { fetchModuleTopics } from '../services/modules';
+import { fetchTopic, completeTopic } from '../services/services';
 import Breadcrumb from '../components/Common/Breadcrumb';
 import {LoadingSpinner} from '../components/ui/LoadingSpinner';
 import TopicsList from '../components/Modules/TopicsList';

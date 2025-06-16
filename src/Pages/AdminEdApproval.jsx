@@ -1,7 +1,7 @@
-// src/pages/AdminEducatorApproval.jsx
+
 import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import api from '../services';
+import api from '../services/api';
 
 const AdminEducatorApproval = () => {
   const { user } = useAuth();

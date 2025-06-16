@@ -1,20 +1,25 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      '/auth': {
+      '/api': {  // Changed from '/auth' to more generic '/api'
         target: 'http://localhost:8000',
         changeOrigin: true,
         secure: false,
-        rewrite: path => path.replace(/^\/auth/, '')
       }
     }
   },
   optimizeDeps: {
     include: ['@heroicons/react', 'katex']
+  },
+  // Add this build configuration
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+    sourcemap: true
   }
 })

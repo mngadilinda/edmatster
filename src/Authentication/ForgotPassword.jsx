@@ -1,9 +1,8 @@
-// src/pages/auth/ForgotPassword.jsx
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { sendPasswordResetEmail } from '../firebase';
 import { toast } from 'react-hot-toast';
+import axios from 'axios'; // or your preferred HTTP client
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -14,14 +13,27 @@ export default function ForgotPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Basic validation
+    if (!email) {
+      toast.error('Please enter your email');
+      return;
+    }
+
     setLoading(true);
     
     try {
-      await sendPasswordResetEmail(auth, email);
-      setMessage('Check your email for a password reset link');
-      toast.success('Password reset email sent!');
+      // Replace with your actual API endpoint
+      const response = await axios.post('/api/auth/forgot-password', { email });
+      
+      if (response.data.success) {
+        setMessage('Check your email for a password reset link');
+        toast.success('Password reset email sent!');
+      } else {
+        toast.error(response.data.message || 'Failed to send reset email');
+      }
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response?.data?.message || error.message || 'An error occurred');
     } finally {
       setLoading(false);
     }
