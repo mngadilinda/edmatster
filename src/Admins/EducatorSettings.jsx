@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '../components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Input } from '../components/ui/input';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from '../components/ui/card';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
-// Custom Label component replacement
-const Label = ({ htmlFor, children, className, ...props }) => (
+// Custom Label component
+const Label = ({ htmlFor, children, className = '', ...props }) => (
   <label
     htmlFor={htmlFor}
     className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 ${className}`}
@@ -19,32 +18,40 @@ const Label = ({ htmlFor, children, className, ...props }) => (
 const Tabs = ({ defaultValue, className, children }) => {
   const [activeTab, setActiveTab] = useState(defaultValue);
 
-  return (
-    <div className={`space-y-6 ${className}`}>
-      {React.Children.map(children, child => {
-        if (child.type === TabsList) {
-          return React.cloneElement(child, { activeTab, setActiveTab });
-        } else if (child.type === TabsContent) {
-          return React.cloneElement(child, { activeTab });
-        }
-        return child;
-      })}
-    </div>
-  );
+  const childrenWithProps = React.Children.map(children, child => {
+    if (React.isValidElement(child)) {
+      if (child.type === TabsList) {
+        return React.cloneElement(child, { activeTab, setActiveTab });
+      }
+      if (child.type === TabsContent) {
+        return React.cloneElement(child, { activeTab });
+      }
+    }
+    return child;
+  });
+
+  return <div className={`space-y-6 ${className}`}>{childrenWithProps}</div>;
 };
 
 const TabsList = ({ children, activeTab, setActiveTab }) => (
   <div className="flex border-b">
-    {React.Children.map(children, child => (
-      React.cloneElement(child, { activeTab, setActiveTab })
-    ))}
+    {React.Children.map(children, child => {
+      if (React.isValidElement(child)) {
+        return React.cloneElement(child, { activeTab, setActiveTab });
+      }
+      return child;
+    })}
   </div>
 );
 
 const TabsTrigger = ({ value, children, activeTab, setActiveTab }) => (
   <button
     onClick={() => setActiveTab(value)}
-    className={`px-4 py-2 font-medium text-sm border-b-2 ${activeTab === value ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground'}`}
+    className={`px-4 py-2 font-medium text-sm border-b-2 ${
+      activeTab === value 
+        ? 'border-primary text-primary' 
+        : 'border-transparent text-muted-foreground hover:text-foreground'
+    }`}
   >
     {children}
   </button>
@@ -69,31 +76,27 @@ const Switch = ({ checked, onCheckedChange, id, defaultChecked }) => {
       id={id}
       type="button"
       onClick={handleChange}
-      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${checked || isChecked ? 'bg-primary' : 'bg-gray-200'}`}
+      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none ${
+        checked || isChecked ? 'bg-primary' : 'bg-gray-200'
+      }`}
     >
       <span
-        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${checked || isChecked ? 'translate-x-6' : 'translate-x-1'}`}
+        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+          checked || isChecked ? 'translate-x-6' : 'translate-x-1'
+        }`}
       />
     </button>
   );
 };
 
 export default function EducatorSettings() {
-  const [name, setName] = useState('Dr. Sarah Johnson');
-  const [email, setEmail] = useState('sarah.johnson@example.com');
+  const [name, setName] = useState('Mr Linda Mngadi');
+  const [email, setEmail] = useState('mngadi.linda@example.com');
   const [bio, setBio] = useState('Computer Science Professor with 10+ years of teaching experience');
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
-  const [profileImage, setProfileImage] = useState(null);
-
-  const handleImageChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setProfileImage(URL.createObjectURL(e.target.files[0]));
-    }
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission (API call in real app)
     alert('Settings saved successfully!');
   };
 
@@ -114,28 +117,6 @@ export default function EducatorSettings() {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="flex items-center space-x-6">
-                  <div>
-                    <Avatar className="w-24 h-24">
-                      <AvatarImage src={profileImage || "/default-avatar.jpg"} />
-                      <AvatarFallback>{name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                    </Avatar>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="profileImage">Profile Picture</Label>
-                    <Input 
-                      id="profileImage" 
-                      type="file" 
-                      accept="image/*" 
-                      onChange={handleImageChange}
-                      className="w-fit"
-                    />
-                    <p className="text-sm text-muted-foreground">
-                      JPG, GIF or PNG. Max size of 2MB
-                    </p>
-                  </div>
-                </div>
-
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="name">Full Name</Label>
