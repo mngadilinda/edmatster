@@ -1,25 +1,39 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  base: '/',
   server: {
     proxy: {
-      '/api': {  // Changed from '/auth' to more generic '/api'
+      // Proxy specific endpoints without /api prefix
+      '/auth': {
         target: 'http://localhost:8000',
         changeOrigin: true,
-        secure: false,
+        secure: false
+      },
+      // Add other backend routes as needed
+      '/users': {
+        target: 'http://localhost:8000',
+        changeOrigin: true
+      },
+      '/posts': {
+        target: 'http://localhost:8000',
+        changeOrigin: true
       }
+      // Add more routes as needed...
     }
   },
-  optimizeDeps: {
-    include: ['@heroicons/react', 'katex']
-  },
-  // Add this build configuration
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    sourcemap: true
+    manifest: true,
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]'
+      }
+    }
   }
 })
