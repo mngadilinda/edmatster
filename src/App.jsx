@@ -25,13 +25,13 @@ const Pricing = lazy(() => import('./payments/Pricing'));
 const Checkout = lazy(() => import('./payments/Checkout'));
 const PaymentSuccess = lazy(() => import('./payments/PaymentSuccess'));
 const PaymentFailed = lazy(() => import('./payments/PaymentFailed'));
-const Programs = lazy(() => import('./pages/Programs'));
-const ProgramDetail = lazy(() => import('./pages/ProgramDetail'));
-const Dashboard = lazy(() => import('./pages/Dashboard'));
-const Profile = lazy(() => import('./pages/Profile'));
-const Learn = lazy(() => import('./pages/Learn'));
-const ModuleDetail = lazy(() => import('./pages/ModuleDetail'));
-const TopicDetail = lazy(() => import('./pages/TopicDetail'));
+const Programs = lazy(() => import('./Pages/Programs'));
+const ProgramDetail = lazy(() => import('./Pages/ProgramDetail'));
+const Dashboard = lazy(() => import('./Pages/Dashboard'));
+const Profile = lazy(() => import('./Pages/Profile'));
+const Learn = lazy(() => import('./Pages/Learn'));
+const ModuleDetail = lazy(() => import('./Pages/ModuleDetail'));
+const TopicDetail = lazy(() => import('./Pages/TopicDetail'));
 
 // Educator Components
 const EducatorAdmin = lazy(() => import('./Admins/EducatorAdmin'));
@@ -48,7 +48,7 @@ const TopicManagementPage = lazy(() => import('./Admins/UploadForms/TopicManagem
 const AssessmentCreationPage = lazy(() => import('./Admins/UploadForms/AssessmentCreate'));
 
 // Admin Components
-const AdminEducatorApproval = lazy(() => import('./pages/AdminEdApproval'));
+const AdminEducatorApproval = lazy(() => import('./Pages/AdminEdApproval'));
 
 function AppContent() {
   const { authChecked } = useAuth();
