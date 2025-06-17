@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { fetchProgramDetail, fetchProgramModules } from '../services/programms';
-import ModuleCard from '../components/Programs/ModuleCard';
-import EnrollButton from '../components/Programs/EnrollButton';
+import ModuleCard from '../components/programs/ModuleCard';
+import EnrollButton from '../components/programs/EnrollButton';
 
 const ProgramDetail = () => {
   const { user } = useContext(AuthContext);
