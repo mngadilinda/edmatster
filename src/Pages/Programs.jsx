@@ -3,8 +3,8 @@ import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { programsService } from '../services/services';
-import ProgramCard from '../components/Programs/ProgramsCard';
-import SearchFilter from '../components/Programs/SearchFilter';
+import ProgramCard from '../components/programs/ProgramsCard';
+import SearchFilter from '../components/programs/SearchFilter';
 
 const Programs = () => {
   const { user } = useContext(AuthContext);
