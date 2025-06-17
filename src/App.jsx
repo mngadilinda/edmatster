@@ -36,7 +36,7 @@ const TopicDetail = lazy(() => import('./Pages/TopicDetail'));
 // Educator Components
 const EducatorAdmin = lazy(() => import('./Admins/EducatorAdmin'));
 const EducatorDashboard = lazy(() => import('./Admins/EducatorDashboard'));
-const EducatorPendingApproval = lazy(() => import('./pages/PendingApproval'));
+const EducatorPendingApproval = lazy(() => import('./Pages/PendingApproval'));
 const EducatorAnalytics = lazy(() => import('./Admins/EducatorAnalytics'));
 const EducatorSettings = lazy(() => import('./Admins/EducatorSettings'));
 const ContentList = lazy(() => import('./Admins/ContentList'));
