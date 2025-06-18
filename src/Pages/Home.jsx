@@ -68,7 +68,7 @@ const Home = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="mt-6 text-lg leading-8 text-gray-600"
             >
-              Your personalized learning journey from school through university. 
+              Your personalized learning journey from school through to university. 
               Build strong foundations and advance to complex concepts at your own pace.
             </motion.p>
             
@@ -203,7 +203,7 @@ const Home = () => {
               Ready to Transform Your Learning?
             </h2>
             <p className="text-primary-100 text-lg mb-8">
-              Join thousands of students mastering science subjects with our proven approach.
+              Join us on a journey to mastering science subjects with our proven approach.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button variant="secondary" size="lg" asChild>
