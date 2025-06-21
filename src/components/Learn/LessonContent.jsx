@@ -6,6 +6,12 @@ import { completeLesson } from '../../services/learn';
 import VideoPlayer from './VideoPlayer';
 import MarkdownContent from './MarkdownContent';
 import { ArrowLeftIcon, ArrowRightIcon, CheckIcon } from '@heroicons/react/24/outline';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css'
+
 
 const LessonContent = ({ lesson }) => {
   const { currentUser } = useAuth();
@@ -62,7 +68,12 @@ const LessonContent = ({ lesson }) => {
 
         {/* Lesson content */}
         <div className="prose max-w-none mb-8">
-          <MarkdownContent content={lesson.content} />
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm, remarkMath]}
+          rehypePlugins={[rehypeKatex]}
+        >
+          {lesson.content}
+        </ReactMarkdown>
         </div>
 
         {/* Attachments */}

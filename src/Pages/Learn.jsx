@@ -4,6 +4,8 @@ import { Button } from '../components/ui/Button';
 import { useState, useEffect } from 'react';
 import { learnService } from '../services/services';
 import {LoadingSpinner} from '../components/ui/LoadingSpinner';
+import DOMPurify from 'dompurify';
+
 
 const Learn = () => {
   const { programId, moduleId, topicId } = useParams();
@@ -15,6 +17,8 @@ const Learn = () => {
     resources: [],
     assessments: []
   });
+  const rawContent = state.topic.formatted_content || state.topic.content?.replace(/\n/g, '<br/>');
+  const safeContent = DOMPurify.sanitize(rawContent);
 
   useEffect(() => {
     const loadContent = async () => {
@@ -181,7 +185,7 @@ const Learn = () => {
           
           <div 
             className="prose max-w-none"
-            dangerouslySetInnerHTML={{ __html: state.topic.formatted_content || state.topic.content }} 
+            dangerouslySetInnerHTML={{ __html: safeContent }} 
           />
 
           {/* Assessments section */}

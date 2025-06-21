@@ -51,9 +51,7 @@ export default function ContentList() {
     if (!confirm('Are you sure you want to delete this content?')) return
     
     try {
-      const response = await fetch(`/api/educator/content/${id}`, {
-        method: 'DELETE'
-      })
+      const response = await api.delete(`/content-uploads/${id}`)
       
       if (!response.ok) {
         throw new Error('Failed to delete content')

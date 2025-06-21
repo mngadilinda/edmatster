@@ -5,6 +5,13 @@ export default function useContentUpload() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  function formatError(err, fallbackType) {
+    return {
+      type: fallbackType,
+      details: err.response?.data || { message: err.message }
+    };
+  }
+
   // Generic upload function
   const uploadContent = async (contentType, data) => {
     setIsLoading(true);
@@ -67,10 +74,7 @@ export default function useContentUpload() {
       return true;
 
     } catch (err) {
-      setError({
-        type: contentType,
-        details: err.response?.data || { message: err.message }
-      });
+      setError(formatError(err, contentType));
       return false;
     } finally {
       setIsLoading(false);

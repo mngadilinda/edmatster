@@ -55,11 +55,12 @@ export default function ContentUploadForm({ onSuccess }) {
       formData.append('gradeLevel', gradeLevel)
       files.forEach(file => formData.append('files', file))
 
-      const response = await api.post('/content-uploads/', {
+      const response = await api.post('/content-uploads/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
+      
 
       if (!response.ok) {
         throw new Error(await response.text())
